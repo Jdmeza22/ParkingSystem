@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using ParkingSystem.Application.Interfaces.Repositories;
 using ParkingSystem.Infrastructure.Persistence;
+using ParkingSystem.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         ServerVersion.AutoDetect(connectionString)
     );
 });
+
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IParkingMovementRepository, ParkingMovementRepository>();
+builder.Services.AddScoped<IRateConfigurationRepository, RateConfigurationRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
