@@ -1,5 +1,6 @@
 ﻿using ParkingSystem.Application.Common;
 using ParkingSystem.Application.Exceptions;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 
@@ -31,6 +32,7 @@ public class ErrorHandlingMiddleware
         context.Response.ContentType = "application/json";
         var statusCode = exception switch
         {
+            ValidationException => HttpStatusCode.BadRequest,
             BadRequestException => HttpStatusCode.BadRequest,
             NotFoundException => HttpStatusCode.NotFound,
             ForbiddenException => HttpStatusCode.Forbidden,

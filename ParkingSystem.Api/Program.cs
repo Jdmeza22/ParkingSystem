@@ -1,8 +1,11 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using ParkingSystem.Api.Middlewares;
 using ParkingSystem.Application.Interfaces.Repositories;
 using ParkingSystem.Application.Interfaces.Services;
 using ParkingSystem.Application.Services;
+using ParkingSystem.Application.Validators;
 using ParkingSystem.Infrastructure.Persistence;
 using ParkingSystem.Infrastructure.Repositories;
 
@@ -27,6 +30,9 @@ builder.Services.AddScoped<IRateConfigurationRepository, RateConfigurationReposi
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterEntryRequestDtoValidator>();
 
 
 var app = builder.Build();
