@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using ParkingSystem.Api.Middlewares;
 using ParkingSystem.Application.Interfaces.Repositories;
+using ParkingSystem.Application.Interfaces.Services;
+using ParkingSystem.Application.Services;
 using ParkingSystem.Infrastructure.Persistence;
 using ParkingSystem.Infrastructure.Repositories;
 
@@ -15,6 +18,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     );
 });
 
+builder.Services.AddScoped<IParkingService, ParkingService>();
+
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IParkingMovementRepository, ParkingMovementRepository>();
 builder.Services.AddScoped<IRateConfigurationRepository, RateConfigurationRepository>();
@@ -23,7 +28,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseSwagger();
 app.UseSwaggerUI();

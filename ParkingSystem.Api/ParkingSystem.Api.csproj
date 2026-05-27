@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.16">
       <PrivateAssets>all</PrivateAssets>
@@ -19,12 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ParkingSystem.Application\ParkingSystem.Application.csproj" />
     <ProjectReference Include="..\ParkingSystem.Infrastructure\ParkingSystem.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Middlewares\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
