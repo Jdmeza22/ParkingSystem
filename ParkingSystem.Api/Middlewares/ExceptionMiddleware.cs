@@ -1,5 +1,6 @@
 ﻿using ParkingSystem.Application.Common;
 using ParkingSystem.Application.Exceptions;
+using Serilog;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
@@ -23,6 +24,7 @@ public class ErrorHandlingMiddleware
         }
         catch (Exception ex)
         {
+            Log.Error(ex, "An unhandled exception occurred. TraceIdentifier: {TraceIdentifier}",   context.TraceIdentifier);
             await HandleExceptionAsync(context, ex);
         }
     }
