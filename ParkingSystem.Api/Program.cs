@@ -6,6 +6,8 @@ using ParkingSystem.Application.Interfaces.Repositories;
 using ParkingSystem.Application.Interfaces.Services;
 using ParkingSystem.Application.Services;
 using ParkingSystem.Application.Validators;
+using ParkingSystem.Infrastructure.Configurations;
+using ParkingSystem.Infrastructure.ExternalServices.Services;
 using ParkingSystem.Infrastructure.Persistence;
 using ParkingSystem.Infrastructure.Repositories;
 
@@ -33,6 +35,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterEntryRequestDtoValidator>();
+
+builder.Services.Configure<EmailApiSettings>(builder.Configuration.GetSection("EmailApiSettings"));
+builder.Services.AddHttpClient<IEmailService, EmailService>();
 
 
 var app = builder.Build();

@@ -9,7 +9,8 @@ namespace ParkingSystem.Application.Services;
 public class ParkingService( 
     IVehicleRepository _vehicleRepository, 
     IParkingMovementRepository _parkingMovementRepository,
-    IRateConfigurationRepository _rateConfigurationRepository) : IParkingService
+    IRateConfigurationRepository _rateConfigurationRepository,
+    IEmailService _emailService) : IParkingService
 {
     public async Task RegisterEntryAsync(RegisterEntryRequestDto request)
     {
@@ -63,6 +64,18 @@ public class ParkingService(
         movement.Status = ParkingStatus.Closed;
 
         await _parkingMovementRepository.SaveChangesAsync();
+
+        try
+        {
+            await _emailService.SendVehicleExitEmailAsync( "jdmm0911@gmail.com",  movement.Vehicle.Plate, movement.Vehicle.VehicleType.Name, totalMinutes, totalAmount );
+            movement.EmailSent = true;
+            await _parkingMovementRepository.SaveChangesAsync();
+        }
+        catch
+        {
+            movement.EmailSent = false;
+            await _parkingMovementRepository.SaveChangesAsync();
+        }
 
         return new ExitResponseDto
         {
